@@ -4,6 +4,7 @@ import (
 //  "gopkg.in/gomail.v2"
   "bufio"
   "os"
+  "fmt"
 )
 
 // Helper function to take care of errors
@@ -35,7 +36,10 @@ func ReadEmailAddresses(filename string) []string {
 
 // Generate the message
 func GenerateMessage(email_address string) string {
-  return ""
+  return fmt.Sprintf("Hello %s!", email_address) +
+    "I hope you are well." +
+    "J'espère que vous allez bien." +
+    "Mi esperas, ke vi estas bone."
 }
 
 // Send the emails
