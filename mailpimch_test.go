@@ -15,6 +15,12 @@ func TestReadEmailAddresses(t *testing.T) {
 }
 
 func TestGenerateMessage(t *testing.T) {
+  fmt.Println(GenerateMessage("trevor.reznik@surematics.com"))
+  // Output:
+  // Hello trevor.reznik@surematics.com!
+  // I hope you are well.
+  // J'espère que vous allez bien.
+  // Mi esperas, ke vi estas bone.
 }
 
 // SendEmails should be tested by catching the outgoing SMTP requests.
