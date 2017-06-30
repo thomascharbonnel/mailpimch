@@ -1,10 +1,11 @@
 package main
 
 import (
-//  "gopkg.in/gomail.v2"
+  "gopkg.in/gomail.v2"
   "bufio"
   "os"
   "fmt"
+  "flag"
 )
 
 // Helper function to take care of errors
@@ -42,10 +43,27 @@ func GenerateMessage(email_address string) string {
     "Mi esperas, ke vi estas bone."
 }
 
-// Send the emails
+// Send the emails.
+// We assume an already configured SMTP server running on localhost port 587.
 func SendEmails(email_addresses []string) {
+  dialer := gomail.Dialer{Host: "localhost", Port: 587}
+  message := gomail.NewMessage()
+
+  message.SetHeader("From", "admin@surematics.com")
+  message.SetHeader("Subject", "Hello")
+
+  for _, email_address := range email_addresses {
+    message.SetHeader("To", email_address)
+    message.SetBody("text/plain", GenerateMessage(email_address))
+
+    handle_errors(dialer.DialAndSend(message))
+  }
 }
 
 // Parse CLI args and execute SendEmails
 func main() {
+  input_filename := flag.String("input", "filename", "The file containing the email addresses")
+  flag.Parse()
+
+  SendEmails(ReadEmailAddresses(*input_filename))
 }
